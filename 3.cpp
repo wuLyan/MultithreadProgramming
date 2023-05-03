@@ -30,8 +30,8 @@ int main(void)
 	Show s2(2, 20, "world");
 
 //	thread t1(s1);
-	thread t1(Show(1, 10, "Hello")); //通过匿名对象创建线程
-	thread t2(s2); //通过已实例化对象创建线程
+	thread t1(Show(1, 10, "Hello")); //通过匿名对象(函数符)创建线程
+	thread t2(s2); //通过已实例化对象(函数符)创建线程
 
 	t1.join();
 	t2.join();

@@ -1,6 +1,6 @@
 //通过函数指针创建线程
 #include <iostream>
-#include <thread>
+#include <thread> //C++11线程库，其中提供了线程相关的类和函数
 #include <unistd.h>
 
 using namespace std;
@@ -14,10 +14,11 @@ int main(void)
 	//函数名就是函数指针，表示函数在内存空间中的首地址
 
 	t1.join(); //阻塞等待子线程运行结束
+	//可以把join理解为“汇合、联合”，意为等待线程t1与主线程汇合，即等待线程t1运行结束
 
 	cout << "Bye!" << endl;
 
-	return 0; //主线程结束时会回收系统资源，回收之后子线程也无法运行
+	return 0; //主线程结束时会回收系统资源，回收之后子线程也无法运行，所以要等待子线程结束之后再继续执行
 }
 
 //子线程

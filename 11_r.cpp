@@ -1,3 +1,4 @@
+//向线程传递引用
 #include <iostream>
 #include <thread>
 
@@ -9,7 +10,8 @@ int main(void)
 {
 	int i = 0;
 
-	thread t1(threadFunction, ref(i));  //std::ref()
+	//传递引用时，必须保证引用所指向的对象在子线程结束前一直存在
+	thread t1(threadFunction, ref(i));  //std::ref()：将传入的参数转换为引用
 	t1.join();
 
 	cout << "i = " << i << endl;

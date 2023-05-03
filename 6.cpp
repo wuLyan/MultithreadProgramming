@@ -1,3 +1,4 @@
+//线程访问局部变量的隐患
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -46,9 +47,11 @@ void funct(void)
 	int count = 10;
 	string str = "Hello world";
 
-	Show s1(id, count, str);
+	Show s1(id, count, str); //类的成员变量是引用类型，绑定了局部变量
 	thread t1(s1);
 
 	t1.detach();
-
+	//一旦子线程结束，类的成员变量所绑定的局部变量就会被销毁
+	//尽量不要在函数中使用指针或引用变量创建线程
+	//若不得不使用，要保证在函数结束之前，线程已经结束
 }

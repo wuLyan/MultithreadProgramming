@@ -1,3 +1,4 @@
+//分离主线程与子线程
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -46,8 +47,8 @@ void funct(void)
 	int count = 10;
 	string str = "Hello world";
 
-	Show s1(id, count, str);
-	thread t1(s1);
+	Show s1(id, count, str); //采用拷贝的方式将局部变量用于类的成员变量初始化
+	thread t1(s1); //通过函数符创建线程
 
-	t1.detach();
+	t1.detach(); //分离线程，主线程不再等待子线程结束，各自执行各自的任务
 }

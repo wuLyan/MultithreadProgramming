@@ -1,3 +1,4 @@
+//异常情况下的RAII等待方式
 #include <iostream>
 #include <thread>
 #include <unistd.h>

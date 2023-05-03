@@ -1,3 +1,4 @@
+//异常情况下的RAII等待方式
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -25,10 +26,11 @@ class Show
 		}
 };
 
+//RAII(资源获取即初始化))要使用到的类
 class thread_guard
 {
 	private:
-		thread &g_thread;
+		thread &g_thread; //线程不支持拷贝构造，所以只能用引用
 	public:
 		explicit thread_guard(thread &my_thread) : g_thread(my_thread){}
 		~thread_guard()
@@ -62,7 +64,9 @@ void funct(void)
 
 	Show s1(id, count, str);
 	thread t1(s1);
-	thread_guard gt(t1);
+	thread_guard gt(t1); //创建RAII对象，使其绑定到线程t1上
+	//在销毁gt对象时，会调用析构函数，析构函数中会调用join()函数等待线程t1结束
+	//局部对象gt的生命周期结束时会自动调用析构函数，线程t1也就结束了
 
 	int n1, n2;
 	cout << "Please enter two numbers: " << endl;
