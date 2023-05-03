@@ -1,3 +1,4 @@
+//通过函数指针创建线程，并向线程函数传递参数
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -12,14 +13,15 @@ int main(void)
 	thread t1(show, 1, 10, "hello");
 	thread t2(show, 2, 20, "world");
 
-	t1.join();
-	t2.join();
+	t1.join(); //阻塞等待子线程1运行结束
+	t2.join(); //阻塞等待子线程2运行结束
 
 	cout << "Bye!" << endl;
 
 	return 0;
 }
 
+//形参列表中必须是const string &str，因为实参是字符串字面值常量，不可被修改
 void show(int id, int count, const string &str)
 {
 	for(int i = 0; i < count; ++i)
