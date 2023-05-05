@@ -1,3 +1,4 @@
+//死锁的产生原因二：两个线程互相等待对方释放资源，导致程序都无法继续执行
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -8,6 +9,7 @@ using namespace std;
 void thread1(void);
 void thread2(void);
 
+//定义两个互斥锁，分别用于锁定两个共享资源
 mutex mt1;
 mutex mt2;
 
@@ -44,7 +46,7 @@ void thread2(void)
 	cout << "Thread2: Shared data ---> b = " << b << endl;
 	sleep(1);
 	lock_guard<mutex> guard1(mt1);
-	cout << "Thread2: Shared data ---> a = " << a << endl;
+	cout << "Thread1: Shared data ---> a = " << a << endl;
 
 	cout << "Thread2: Get shared data: a + b = " << a + b << endl;
 }

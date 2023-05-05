@@ -1,4 +1,4 @@
-//通过命令ps -eLF查看各子线程具体运行在哪个核心上
+//通过命令ps -eLF查看各子线程具体运行在哪个核心(查看CPU编号)上
 #include <iostream>
 #include <thread>
 #include <unistd.h>

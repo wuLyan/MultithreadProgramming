@@ -1,3 +1,5 @@
+//避免死锁的方法三：使用scoped_lock模板类(C++17标准)
+//编译方法：g++ 21.cpp -std=c++17
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -29,7 +31,7 @@ void thread1(void)
 {
 	cout << "Thread1 is running: " << endl;
 	//scoped_lock<mutex, mutex> guard(mt1, mt2);
-	scoped_lock gurad(mt1, mt2);
+	scoped_lock guard(mt1, mt2); //C++17新特性，可以省略模板参数，由编译器自动推断参数种类及个数
 	cout << "Thread1: Shared data ---> a = " << a << endl;
 	sleep(1);
 	cout << "Thread1: Shared data ---> b = " << b << endl;

@@ -1,3 +1,4 @@
+//在多线程中使用互斥(互斥锁)
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -6,8 +7,8 @@
 
 using namespace std;
 
-vector<int> ivec;
-mutex guard_mutex;
+vector<int> ivec; //待写入数据的容器
+mutex guard_mutex; //定义互斥锁
 
 void write_to_vector(int id, int value);
 
@@ -32,8 +33,9 @@ void write_to_vector(int id, int value)
 {
 	cout << "Thread " << id << " is running!" << endl;
 
-	lock_guard<mutex> guard(guard_mutex);
+	lock_guard<mutex> guard(guard_mutex); //用互斥锁初始化lock_guard对象
 	cout << "Thread " << id << " lock to the resource!" << endl;
 	ivec.push_back(value);
 	sleep(5);
+	//当线程函数结束时，lock_guard类的对象guard析构，自动释放互斥锁
 }

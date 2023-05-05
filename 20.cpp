@@ -1,3 +1,4 @@
+//避免死锁的方法二：使用unique_lock模板类
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -34,8 +35,10 @@ void thread1(void)
 	unique_lock<mutex> guard1(mt1, defer_lock);
 	unique_lock<mutex> guard2(mt2, defer_lock);
 	//guard1.lock();
-	//guard2.lock();
-	lock(guard1, guard2);
+	//guard2.lock(); //当两个线程不是同时对两个互斥锁进行加锁操作时，又会造成死锁现象
+	//调用库函数lock()，而不是成员函数lock()
+	lock(guard1, guard2); //同时对unique_lock类的对象guard1、guard2进行加锁操作，无需手动解锁
+	//lock(mt1, mt2); //错误，如果单独对互斥量进行加锁，最后还需要手动解锁，否则又会造成死锁现象
 	cout << "Thread1: Shared data ---> a = " << a << endl;
 	sleep(1);
 	cout << "Thread1: Shared data ---> b = " << b << endl;
