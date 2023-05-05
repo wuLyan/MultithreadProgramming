@@ -22,7 +22,7 @@ int main(void)
 }
 
 //实参是字符串字面值常量(char const *)，因此可以被隐式转换为string类型(妙啊)
-//形参列表中必须是const string &str，因为实参不可被修改
+//形参列表中必须是const string &str，因为实参是字符串字面值常量不可被修改
 void show(int id, int count, const string &str)
 {
 	for(int i = 0; i < count; ++i)

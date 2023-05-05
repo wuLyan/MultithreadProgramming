@@ -14,7 +14,8 @@ class Show
 		string str;
 	public:
 		Show(int i, int c, string s) : id(i), count(c), str(s){};
-		void operator()() const //必须重载()运算符，使得Show类的对象可以像函数一样调用
+		//必须重载()运算符，使得Show类的对象可以像函数一样调用，只不过这个重载函数符的形参列表为空
+		void operator()() const
 		{
 			for(int i = 0; i < count; ++i)
 			{
