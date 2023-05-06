@@ -22,4 +22,5 @@ int main(void)
 void threadFunction(int &r)
 {
 	r += 100;
+	cout << "r = " << r << endl;
 }
