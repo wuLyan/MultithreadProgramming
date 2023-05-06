@@ -1,3 +1,4 @@
+//条件变量condition_variable的成员函数wait的第二种用法
 #include <iostream>
 #include <thread>
 #include <mutex>

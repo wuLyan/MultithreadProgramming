@@ -1,9 +1,10 @@
+//子线程之间的数据传输：promise + future
 #include <iostream>
 #include <future>
 
 using namespace std;
 
-void thread1(promise<int> &mypromise, int n);
+void thread1(promise<int> &my_promise, int n);
 void thread2(future<int> &fut);
 
 int main(void)
@@ -21,15 +22,15 @@ int main(void)
 	return 0;
 }
 
-void thread1(promise<int> &mypromise, int n)
+void thread1(promise<int> &my_promise, int n)
 {
 	cout << "thread1 input value: " << n << endl;
 	n *= 100;
 	this_thread::sleep_for(chrono::seconds(5));
-	mypromise.set_value(n);
+	my_promise.set_value(n);
 }
 
 void thread2(future<int> &fut)
 {
-	cout << "thread2 get vaule: " << fut.get() << endl;
+	cout << "thread2 get value: " << fut.get() << endl;
 }

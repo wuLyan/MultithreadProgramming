@@ -1,3 +1,4 @@
+//async()函数的使用：使用类的成员函数创建异步任务
 #include <iostream>
 #include <future>
 #include <unistd.h>
@@ -26,7 +27,8 @@ int main(void)
 	Prime p;
 
 	//future<bool> fut = async(is_prime, 313222313);
-	future<bool> fut = async(&Prime::is_prime, p, 313222313);
+	//auto fut = async(&Prime::is_prime, p, 313222313);
+	future<bool> fut = async(&Prime::is_prime, p, 313222313); //类似于用类的成员函数指针创建线程的方式
 	cout << "Checking whether 313222313 is prime." << endl;
 
 	bool ret = fut.get();
