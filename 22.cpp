@@ -46,10 +46,12 @@ void thread1(void)
 */
 		unique_lock<mutex> lck(mtx);
 		count = i++;
-		lck.unlock(); //手动进行解锁mtx
+		lck.unlock(); //手动解锁互斥锁mtx
 
-		//flag.notify_one(); //当使用notify_one时只能通知一个线程，另外两个线程只能有一个线程被唤醒
-		flag.notify_all(); //当使用notify_all时可以通知所有线程，所有线程都会被唤醒
+		//flag.notify_one(); //当使用notify_one时只能通知一个线程，另外两个线程只能有一个线程接收到信号
+		flag.notify_all(); //当使用notify_all时可以通知所有线程，所有线程都会接收到信号
+		//当发出信号之后没有其他线程接收也没关系，也就是没有线程从等待状态变为阻塞状态
+		//当线程接收到信号之后，由等待状态变为阻塞状态，只有当互斥锁mtx被解锁之后才能被唤醒，要注意区分钙奶
 		sleep(1);
 	}
 }
@@ -61,7 +63,9 @@ void thread2(void)
 		//因为lock_guard模板类的对象无法被暂时解锁，所以改用unique_lock模板类
 		unique_lock<mutex> lck(mtx);
 		cout << "Thread2 waits for count: " << endl;
-		flag.wait(lck); //阻塞等待时会暂时性地解锁mtx用于接收信号，因此不会陷入死锁
+		flag.wait(lck); //进入等待状态，等待时会暂时性地解锁mtx用于接收信号，因此不会陷入死锁
+		//当收到条件变量发出的信号后线程由等待状态变为阻塞状态，当互斥锁mtx被解锁后线程才会被唤醒(阻塞状态变为就绪状态)
+		//虽然阻塞状态和等待状态都是进入系统的阻塞队列，但是两者的含义不能混用：阻塞表示由于互斥锁被占用而无法继续执行，等待表示由于条件不满足而无法继续执行
 		cout << count << endl;
 	}
 }
