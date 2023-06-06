@@ -9,7 +9,7 @@ using namespace std;
 void thread1(void);
 void thread2(void);
 
-//定义两个互斥锁，分别用于锁定两个共享资源
+//定义两个互斥锁，分别用于锁定两个共享资源(互斥锁，一定是表示对某种资源的唯一访问权限)
 mutex mt1;
 mutex mt2;
 

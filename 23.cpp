@@ -9,6 +9,7 @@ using namespace std;
 
 mutex mtx;
 condition_variable produce, consume;
+// 条件变量发出的信号只能由同一条件变量接收，不能混用
 
 int cargo = -1; //表示库存货物的数量
 

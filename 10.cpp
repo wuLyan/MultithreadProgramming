@@ -32,10 +32,10 @@ class thread_guard
 	private:
 		thread &g_thread; //线程不支持拷贝构造，所以只能用引用
 	public:
-		explicit thread_guard(thread &my_thread) : g_thread(my_thread){}
+		explicit thread_guard(thread &my_thread) : g_thread(my_thread){} //禁止隐式类型转换
 		~thread_guard()
 		{
-			if(g_thread.joinable())
+			if(g_thread.joinable()) //判断所引用的线程是否可join
 				g_thread.join();
 		}
 };

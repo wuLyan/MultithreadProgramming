@@ -29,7 +29,7 @@ int main(void)
 
 void signal_(void)
 {
-	sleep(5);
+	sleep(5); //由于这个延时，两个wait线程一定会提前加锁，然后到wait阻塞
 	unique_lock<mutex> lck(mtx);
 	cout << "notify all threads" << endl;
 	lck.unlock(); //必须在其他线程被唤醒之前手动解锁互斥量
@@ -52,8 +52,8 @@ void wait(int id)
 	//奥理解了，当运行下面的wait语句时，wait会暂时解锁互斥量mtx，这时另一个子线程可以对其加锁
 	flag.wait(lck, [](){return count == 1;});
 	//成员函数wait的第二个参数是一个lambda表达式，用于判断条件是否满足
-	//当互斥锁mtx收到信号且lambda表达式返回true时，wait才通过阻塞，继续执行下面的语句
-	//当lambda表达式返回true时，即使互斥锁mtx没有收到信号，wait也会通过阻塞，但此时不会暂时解锁互斥锁mtx
+	//当条件变量收到信号&互斥锁mtx被解锁&lambda表达式返回true时，wait才通过阻塞，继续执行下面的语句
+	//当lambda表达式返回true时，即使没有收到信号，wait也会通过阻塞，但此时不会暂时解锁互斥锁mtx
 	//即此时子线程t2、t3某一时刻只能有一个线程在执行，另外一个线程由于互斥量mtx被加锁不会运行，卡在了第一步实例化对象lck处
 	cout << "Thread " << id << ": " << count << endl;
 	//sleep(1);

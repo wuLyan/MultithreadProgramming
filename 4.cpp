@@ -42,7 +42,7 @@ int main(void)
 	thread t1(Show(1, 10, "Hello"));
 	thread t2(s2);
 
-	//lambda create thread，用Lambda表达式替代函数指针即可
+	// lambda create thread，用Lambda表达式替代函数指针即可
 	thread t3([](int id, int count, string str){
 		for(int i = 0; i < count; ++i)
 		{
@@ -51,12 +51,12 @@ int main(void)
 		}
 	}, 3, 30, "I love you, Rick!");
 
-	//function member
+	// function member
 	Show s4(4, 40, "Good morning");
 	thread t4(&Show::display, s4); //一定要指明类作用域，且传递地址
-	//本质上还是函数指针，只不过是类的成员函数指针
+	// 本质上还是函数指针，只不过是类的成员函数指针
 
-	//以上四个线程同步并发执行
+	// 以上四个线程同步并发执行
 
 	t1.join();
 	t2.join();

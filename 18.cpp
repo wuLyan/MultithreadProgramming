@@ -29,7 +29,7 @@ int main(void)
 void thread1(void)
 {
 	cout << "Thread1 is running: " << endl;
-	lock(mt1, mt2); //同时对两个互斥锁进行加锁操作，需要手动解锁
+	lock(mt1, mt2); //调用库函数同时对两个互斥锁进行加锁操作，需要手动解锁
 	//参数adopt_lock：对未上锁的互斥锁加锁，对已上锁的互斥锁不加锁
 	lock_guard<mutex> guard1(mt1, adopt_lock);  //std::adopt_lock
 	lock_guard<mutex> guard2(mt2, adopt_lock);  //利用类的析构函数中的解锁操作，自动解锁

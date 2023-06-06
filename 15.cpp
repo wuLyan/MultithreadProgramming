@@ -28,8 +28,8 @@ class protect_data
 		user_data data; //protect shared data，其他类的对象
 		mutex guard_mutex; //定义互斥锁
 	public:
-		protect_data(){data.a = 1; data.c = 'A';}
-		void process_data(void) //私有成员变量只能通过成员函数访问
+		protect_data(){data.a = 1; data.c = 'A';} //默认构造函数
+		void process_data(void) //成员变量只能通过成员函数访问
 		{   //某一时刻只能有一个线程修改共享数据
 			lock_guard<mutex> guard(guard_mutex);
 			data.a += 10;

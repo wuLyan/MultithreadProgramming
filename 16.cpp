@@ -35,6 +35,6 @@ void thread2(void)
 {
 	cout << "Thread2 is running: " << endl;
 	sleep(1);  //C++线程库中的延时函数：this_thread::sleep_for(chrono::seconds(1));
-	lock_guard<mutex> guard(mt); //已加锁的互斥量无法再次加锁，陷入死锁状态
+	lock_guard<mutex> guard(mt); //已加锁的互斥量无法再次加锁(相当于资源计数量变为0)，陷入死锁状态
 	cout << "Thread2: Shared data ---> num = " << num << endl;
 }

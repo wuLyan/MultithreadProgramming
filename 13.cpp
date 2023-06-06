@@ -1,4 +1,5 @@
-//在程序运行时控制线程数量
+// 在程序运行时控制线程数量
+// 应用：多核并发计算
 #include <iostream>
 #include <thread>
 #include <vector>
